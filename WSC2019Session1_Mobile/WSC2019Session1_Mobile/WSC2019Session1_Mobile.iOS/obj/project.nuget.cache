@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "+6w3XO6IPcV9cRQ+nmRyqsvrs0dEdwVU2MR+0lC41c99+glIdNFLAF9AMiBd2aM+N5ZEp+7Z0moR1gVD7NIoKg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\USER\\Desktop\\WSC2019_Session1\\WSC2019Session1_Mobile\\WSC2019Session1_Mobile\\WSC2019Session1_Mobile.iOS\\WSC2019Session1_Mobile.iOS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\USER\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\xamarin.essentials\\1.7.0\\xamarin.essentials.1.7.0.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\xamarin.forms\\5.0.0.2196\\xamarin.forms.5.0.0.2196.nupkg.sha512"
+  ],
+  "logs": []
+}
