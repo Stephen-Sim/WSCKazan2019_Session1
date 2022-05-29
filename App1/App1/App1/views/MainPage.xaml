@@ -1,66 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:App1.viewmodels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:views="clr-namespace:App1"
              x:Class="App1.MainPage">
-    <ContentPage.BindingContext>
-        <viewmodels:MainPageViewModel/>
-    </ContentPage.BindingContext>
-
+    
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Picker x:Name="dPicker" WidthRequest="180" Title="Department" ItemsSource="{Binding DeparmentList}" ItemDisplayBinding="{Binding Name}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
-                <Picker x:Name="aPicker" WidthRequest="180" Title="Asset Group" ItemsSource="{Binding AssetGroupList}" ItemDisplayBinding="{Binding Name}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                <Picker Title="Department" WidthRequest="180"
+                        x:Name="dpicker"
+                        ItemsSource="{Binding dList}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding selectedD, Mode=TwoWay}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                
+                <Picker Title="Asset Group" WidthRequest="180"
+                        x:Name="apicker"
+                        ItemsSource="{Binding agList}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding selectedAG, Mode=TwoWay}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"/>
             </StackLayout>
 
             <StackLayout Margin="10">
-                <Label Text="Warranty date range:" FontSize="18"/>
+                <Label Text="Warranty date range :"
+                       FontSize="18"/>
                 <BoxView HeightRequest="1" BackgroundColor="Gray"/>
                 <StackLayout Orientation="Horizontal">
-                    <Image Source="calender.png" HeightRequest="35"/>
-                    <DatePicker x:Name="sDatePicker"
-                                DateSelected="StartDatePicker_DateSelected"/>
-                    <Image Source="calender.png" HeightRequest="35"/>
-                    <DatePicker x:Name="eDatePicker"
-                                DateSelected="EndDatePicker_DateSelected"/>
+                    <Image Source="calender.png"/>
+                    <DatePicker x:Name="startDate" Date="{Binding sDate}"
+                                DateSelected="startDate_DateSelected"/>
+                    <Image Source="calender.png"/>
+                    <DatePicker x:Name="endDate" Date="{Binding eDate}"
+                                DateSelected="endDate_DateSelected"/>
                 </StackLayout>
-            </StackLayout>
 
-            <StackLayout Margin="10">
-                <Editor x:Name="sEditor" Placeholder="Search" BackgroundColor="LightGray" TextChanged="Editor_TextChanged"/>
-                <Label Text="Asset List:"/>
-
-                <ListView x:Name="assetListView" ItemsSource="{Binding AssetClasses}" HasUnevenRows="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Orientation="Horizontal">
-                                    <Image Source="circle.png" HeightRequest="30"/>
-                                    <StackLayout  Margin="20,5">
-                                        <Label
-                                            Text="{Binding AssetName}"/>
-                                        <Label
-                                            Text="{Binding Location}"/>
-                                        <Label
-                                            Text="{Binding AssetSN}"/>
+                <StackLayout>
+                    <Editor x:Name="sEditor" Placeholder="Search" BackgroundColor="LightGray"
+                            TextChanged="Editor_TextChanged"/>
+                    <Label Text="Asset List :"/>
+                    <ListView HasUnevenRows="True" ItemsSource="{Binding AssetClasses}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="circle.png" HeightRequest="50"/>
+                                        <StackLayout>
+                                            <Label Text="{Binding AssetName}"/>
+                                            <Label Text="{Binding AssetSN}"/>
+                                            <Label Text="{Binding Location}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                            <ImageButton Source="edit.png" BackgroundColor="Transparent" WidthRequest="30"
+                                                         CommandParameter="{Binding Id}"
+                                                         Clicked="ImageButton_Clicked_2"/>
+                                            <ImageButton Source="transfer.png" BackgroundColor="Transparent" WidthRequest="30"/>
+                                            <ImageButton Source="history.png" BackgroundColor="Transparent" WidthRequest="30" 
+                                                         CommandParameter="{Binding Id}"
+                                                         Clicked="ImageButton_Clicked"/>
+                                        </StackLayout>
                                     </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
 
-                                    <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
-                                        <ImageButton Source="edit.png" BackgroundColor="Transparent" WidthRequest="20" HeightRequest="10" CommandParameter="{Binding AssetId}"/>
-                                        <ImageButton Source="transfer.png" BackgroundColor="Transparent" WidthRequest="20" HeightRequest="10" CommandParameter="{Binding AssetId}"/>
-                                        <ImageButton Source="history.png" BackgroundColor="Transparent" WidthRequest="20" HeightRequest="10" CommandParameter="{Binding AssetId}" Clicked="HistoryImageButton_Clicked"/>
-                                    </StackLayout>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-
-            <StackLayout Margin="10">
-                <Grid RowDefinitions="50" ColumnDefinitions="300, 50">
-                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding recordCount}"/>
-                    <ImageButton Grid.Row="0" Grid.Column="1" Source="add.png" BackgroundColor="Transparent" Clicked="ImageButton_Clicked"/>
+                <Grid RowDefinitions="50" ColumnDefinitions="290, 80">
+                    <Label Text="{Binding totalAsset}"/>
+                    <ImageButton Grid.Column="1" Source="add.png" BackgroundColor="Transparent" Clicked="ImageButton_Clicked_1"/>
                 </Grid>
             </StackLayout>
         </StackLayout>

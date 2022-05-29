@@ -11,65 +11,88 @@ namespace App1.services
 {
     public class GetService
     {
-        string url = "http://10.130.7.170:45455/api/get";
-
+        string url = "http://10.130.7.45:45455/api/get";
         HttpClient conn = new HttpClient();
 
-        public async Task<List<AssetClass>> getAssetRecord()
+        public async Task<ObservableCollection<AssetClass>> getAssetRecord()
         {
             try
             {
                 string url = $"{this.url}/getAssetRecord";
-
-                var responce = await conn.GetStringAsync(url);
-                var _assetClass = JsonConvert.DeserializeObject<List<AssetClass>>(responce);
-                return new List<AssetClass>(_assetClass);
+                var response =  await conn.GetStringAsync(url);
+                var result = JsonConvert.DeserializeObject<ObservableCollection<AssetClass>>(response);
+                return new ObservableCollection<AssetClass>(result);
             }
-            catch (Exception er)
+            catch (Exception err)
             {
-                Console.WriteLine(er.Message);
+                Console.WriteLine(err.Message);
                 return null;
             }
         }
-
-        public async Task<List<AssetClass>> getAssetRecord(int aId, int dId, string sDate, string eDate, string sText)
+        public async Task<ObservableCollection<AssetClass>> getAssetRecord(int did, int aid, string sdate, string edate, string stext)
         {
             try
             {
-                string url = $"{this.url}/getAssetRecord?aId={aId}&dId={dId}&sDate={sDate}&eDate={eDate}&sText={sText}";
-
-                var responce = await conn.GetStringAsync(url);
-                var _assetClass = JsonConvert.DeserializeObject<List<AssetClass>>(responce);
-                return new List<AssetClass>(_assetClass);
+                string url = $"{this.url}/getAssetRecord?did={did}&aid={aid}&sdate={sdate}&edate={edate}&stext={stext}";
+                var response = await conn.GetStringAsync(url);
+                var result = JsonConvert.DeserializeObject<ObservableCollection<AssetClass>>(response);
+                return new ObservableCollection<AssetClass>(result);
             }
-            catch (Exception)
+            catch (Exception err)
             {
+                Console.WriteLine(err.Message);
                 return null;
             }
         }
 
-        public async Task<List<TransferLogClass>> getHistoryTransfer(int id)
-        { 
+        public async Task<ObservableCollection<TransferHistoryClass>> getTransferHistory(int id)
+        {
             try
             {
-                string url = $"{this.url}/getHistoryTransfer?Id={id}";
-
-                var responce = await conn.GetStringAsync(url);
-                var transferLogClasses = JsonConvert.DeserializeObject<List<TransferLogClass>>(responce);
-                return new List<TransferLogClass>(transferLogClasses);
+                string url = $"{this.url}/getTransferHistory?id={id}";
+                var response = await conn.GetStringAsync(url);
+                var result = JsonConvert.DeserializeObject<ObservableCollection<TransferHistoryClass>>(response);
+                return new ObservableCollection<TransferHistoryClass>(result);
             }
-            catch (Exception)
+            catch (Exception err)
             {
+                Console.WriteLine(err.Message);
                 return null;
             }
         }
 
-        public async Task<string> storeAsset(string an, int did, int lid, int aid, int eid, string desc, string edate, string asn)
+        public async Task<string> addAsset(int? assetId, string assetname, string desc, int did, int lid, int aid, int eid, string edate, string assetsn)
         {
-            string url = $"{this.url}/storeAsset?an={an}&did={did}&lid={lid}&aid={aid}&eid={eid}&desc={desc}&edate={edate}&asn={asn}";
-            var responce = await conn.GetStringAsync(url);
-            var result = JsonConvert.DeserializeObject<string>(responce);
-            return result;
+            // string assetname, string desc, int did, int lid, int aid, int eid, string edate, string assetsn
+            try
+            {
+                string url = $"{this.url}/addAsset?assetId={assetId}&assetname={assetname}&desc={desc}&did={did}&lid={lid}&aid={aid}&eid={eid}&edate={edate}&assetsn={assetsn}";
+                var response = await conn.GetStringAsync(url);
+                var result = JsonConvert.DeserializeObject<string>(response);
+                return result;
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+                return null;
+            }
         }
+
+        public async Task<Asset> getAsset(int id)
+        {
+            try
+            {
+                string url = $"{this.url}/getAsset?id={id}";
+                var response = await conn.GetStringAsync(url);
+                var result = JsonConvert.DeserializeObject<Asset>(response);
+                return result;
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+                return null;
+            }
+        }
+
     }
 }

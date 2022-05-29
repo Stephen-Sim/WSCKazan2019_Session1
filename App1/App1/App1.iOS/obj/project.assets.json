@@ -1044,30 +1044,26 @@
   "projectFileDependencyGroups": {
     "Xamarin.iOS,Version=v1.0": [
       "App1 >= 1.0.0",
+      "Newtonsoft.Json >= 13.0.1",
       "Xamarin.Essentials >= 1.7.0",
       "Xamarin.Forms >= 5.0.0.2196"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\USER\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\simsh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Desktop\\first 3 hours\\App1\\App1\\App1.iOS\\App1.iOS.csproj",
+      "projectUniqueName": "C:\\Users\\simsh\\Desktop\\saturday training\\App1\\App1\\App1.iOS\\App1.iOS.csproj",
       "projectName": "App1.iOS",
-      "projectPath": "C:\\Users\\USER\\Desktop\\first 3 hours\\App1\\App1\\App1.iOS\\App1.iOS.csproj",
-      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\Desktop\\first 3 hours\\App1\\App1\\App1.iOS\\obj\\",
+      "projectPath": "C:\\Users\\simsh\\Desktop\\saturday training\\App1\\App1\\App1.iOS\\App1.iOS.csproj",
+      "packagesPath": "C:\\Users\\simsh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\simsh\\Desktop\\saturday training\\App1\\App1\\App1.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\simsh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1080,8 +1076,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\USER\\Desktop\\first 3 hours\\App1\\App1\\App1\\App1.csproj": {
-              "projectPath": "C:\\Users\\USER\\Desktop\\first 3 hours\\App1\\App1\\App1\\App1.csproj"
+            "C:\\Users\\simsh\\Desktop\\saturday training\\App1\\App1\\App1\\App1.csproj": {
+              "projectPath": "C:\\Users\\simsh\\Desktop\\saturday training\\App1\\App1\\App1\\App1.csproj"
             }
           }
         }
@@ -1090,6 +1086,10 @@
     "frameworks": {
       "xamarinios10": {
         "dependencies": {
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.1, )"
+          },
           "Xamarin.Essentials": {
             "target": "Package",
             "version": "[1.7.0, )"

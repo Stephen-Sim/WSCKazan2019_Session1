@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,92 +12,116 @@ namespace WebApplication1.Controllers
     {
         Session1Entities ent = new Session1Entities();
         [HttpGet]
+        public object test()
+        {
+            return Ok("success");
+        }
+
+        [HttpGet]
         public object getAssetRecord()
         {
-            var allData = ent.Assets.ToList().Select(x => new
-            {
-                AssetId = x.ID,
-                x.AssetName,
-                x.AssetSN,
+            var alldata = ent.Assets.ToList().Select(x => new { 
+                Id = x.ID,
+                AssetName = x.AssetName,
+                AssetSN = x.AssetSN,
                 Location = x.DepartmentLocation.Location.Name
             });
+
+            return alldata;
+        }
+
+        [HttpGet]
+        public object getAssetRecord(int did, int aid, string sdate, string edate, string stext)
+        {
+            var alldata = ent.Assets.ToList();
+
+            DateTime d1 = DateTime.ParseExact(sdate, "yyyy/MM/dd", null);
+            DateTime d2 = DateTime.ParseExact(edate, "yyyy/MM/dd", null);
+
+            alldata = alldata.Where(x => x.WarrantyDate >= d1 && x.WarrantyDate <= d2).ToList();
+
+            if (did != null && aid != null)
+            {
+                alldata = alldata.Where(x => x.AssetGroupID == aid && x.DepartmentLocation.DepartmentID == did).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(stext))
+            {
+                alldata = alldata.Where(x => x.AssetName.Contains(stext)).ToList();
+            }
+
+            return alldata.Select(x => new {
+                Id = x.ID,
+                AssetName = x.AssetName,
+                AssetSN = x.AssetSN,
+                Location = x.DepartmentLocation.Location.Name
+            });
+        }
+
+        [HttpGet]
+        public object getTransferHistory(int id)
+        {
+            var allData = ent.AssetTransferLogs.Where(x => x.AssetID == id).ToList().Select(x => new
+            {
+                date = x.TransferDate.ToShortDateString(),
+                oldDepartment = ent.DepartmentLocations.Where(y => y.ID == x.FromDepartmentLocationID).FirstOrDefault().Department.Name,
+                oldAssetSN = x.FromAssetSN,
+                newDepartment = ent.DepartmentLocations.Where(y => y.ID == x.ToDepartmentLocationID).FirstOrDefault().Department.Name,
+                newAssetSN = x.ToAssetSN
+            });
+
             return allData;
         }
 
         [HttpGet]
-        public object getAssetRecord(int aId, int dId, string sDate, string eDate, string sText)
+        public object addAsset(int? assetId, string assetname, string desc, int did, int lid, int aid, int eid, string edate, string assetsn)
         {
-            var allData = ent.Assets.ToList();
-
-            DateTime d1 = DateTime.ParseExact(sDate, "yyyy/MM/dd", null);
-            DateTime d2 = DateTime.ParseExact(eDate, "yyyy/MM/dd", null);
-
-            allData = allData.Where(x => x.WarrantyDate >= d1 && x.WarrantyDate <= d2).ToList();
-
-            if (aId != 0 && dId != 0)
-            {
-                allData = allData.Where(x => x.AssetGroupID == aId && x.DepartmentLocation.DepartmentID == dId).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(sText))
-            {
-                allData = allData.Where(x => x.AssetName.Contains(sText)).ToList();
-            }
-
-            return allData.Select(x => new
-            {
-                AssetId = x.ID,
-                x.AssetName,
-                x.AssetSN,
-                Location = x.DepartmentLocation.Location.Name
-            });
-        }
-
-        [HttpGet]
-        public object getHistoryTransfer(int id)
-        {
-            var allData = ent.AssetTransferLogs.Where(x => x.AssetID == id).ToList().Select(x => new
-            {
-                TransferDate = x.TransferDate.ToString("MM/dd/yyyy"),
-                FromAssetSN = x.FromAssetSN,
-                ToAssetSN = x.ToAssetSN,
-                FromDepartmentLocation = ent.DepartmentLocations.Where(y => y.ID == x.FromDepartmentLocationID).FirstOrDefault().Location.Name.ToString(),
-                ToDepartmentLocation = ent.DepartmentLocations.Where(y => y.ID == x.ToDepartmentLocationID).FirstOrDefault().Location.Name.ToString(),
-            });
-
-            return allData.ToList();
-        }
-
-        [HttpGet]
-        public object storeAsset(string an, int did, int lid, int aid, int eid, string desc, string edate, string asn)
-        {
-            DateTime d1 = DateTime.ParseExact(edate, "yyyy/MM/dd", null);
             try
             {
-                var asset = new Asset();
-                asset.AssetSN = asn;
-                asset.AssetName = an;
-                asset.DepartmentLocationID = ent.DepartmentLocations.Where(x => x.DepartmentID == did).FirstOrDefault().ID;
-                asset.EmployeeID = eid;
-                asset.AssetGroupID = aid;
+                var asset = (assetId == null ? new Asset() : ent.Assets.Where(x => x.ID == assetId).First());
+
+                asset.AssetName = assetname;
                 asset.Description = desc;
-                asset.WarrantyDate = d1;
+                asset.AssetSN = assetsn;
+                asset.EmployeeID = eid;
+                asset.WarrantyDate = DateTime.ParseExact(edate, "yyyy/MM/dd", null);
+                asset.AssetGroupID = aid;
+                asset.DepartmentLocationID = ent.DepartmentLocations.Where(x => x.DepartmentID == did).FirstOrDefault().ID;
 
-                ent.Assets.Add(asset);
+                if (assetId == null)
+                {
+                    ent.Assets.Add(asset);
+                }
+                else
+                {
+                    ent.Assets.Append(asset);
+                }
+
                 ent.SaveChanges();
+                return Ok("success");
             }
-            catch (Exception)
+            catch (Exception err)
             {
-                return Ok("failed");
+                Console.WriteLine(err.Message);
+                return BadRequest();
             }
-
-            return Ok("success");
         }
 
         [HttpGet]
-        public object test()
+        public object getAsset(int id)
         {
-            return Ok("success");
+            return ent.Assets.Where(x => x.ID == id).ToList().Select(x => new
+            {
+                x.ID,
+                x.AssetSN,
+                x.AssetName,
+                LocationID = x.DepartmentLocation.Location.ID,
+                DepartmentID = x.DepartmentLocation.Department.ID,
+                x.EmployeeID,
+                x.AssetGroupID,
+                x.Description,
+                x.WarrantyDate
+            }).FirstOrDefault();
         }
     }
 }

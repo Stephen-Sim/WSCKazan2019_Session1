@@ -1,53 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:App1.viewmodels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App1.views.RegisterAssetPage">
-
-    <ContentPage.BindingContext>
-        <viewmodels:ResgisterAssetViewModel/>
-    </ContentPage.BindingContext>
-
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Margin="10">
-                <Editor x:Name="anEditor" Placeholder="Asset Name"/>
+        <StackLayout Margin="10">
+            <StackLayout>
+                <Editor x:Name="AssetNameEditor" Placeholder="Asset Name"/>
                 <StackLayout Orientation="Horizontal">
-                    <Picker x:Name="dpikcer" Title="Department" WidthRequest="180" ItemsSource="{Binding DeparmentList}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedDepartment, Mode=TwoWay}"/>
-                    <Picker x:Name="lpicker" Title="Location" WidthRequest="180" ItemsSource="{Binding LocationList}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"/>
+                    <Picker Title="Department" WidthRequest="180"
+                        x:Name="dpicker"
+                        ItemsSource="{Binding dList}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding selectedD}"/>
+
+                    <Picker Title="Location" WidthRequest="180"
+                        x:Name="lpicker"
+                        ItemsSource="{Binding lList}"
+                        ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding selectedL}"/>
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal">
-                    <Picker x:Name="apicker" Title="Asset Group" WidthRequest="180" ItemsSource="{Binding AssetGroupList}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedAssetGroup, Mode=TwoWay}"/>
-                    <Picker x:Name="epicker" Title="Accountable Party" WidthRequest="180" ItemsSource="{Binding EmployeeList}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"/>
-                </StackLayout>
+                    <Picker Title="Asset Group" WidthRequest="180"
+                        x:Name="apicker"
+                        ItemsSource="{Binding agList}"
+                        ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding selectedAG}"/>
 
-                <StackLayout>
-                    <Label Margin="10, 30, 10, 10" Text="Asset Description" FontSize="18"/>
-                    <Editor Placeholder="Mutliple Line" x:Name="adEditor"/>
+                    <Picker Title="Accoutable Party" WidthRequest="180"
+                        x:Name="epicker"
+                        ItemsSource="{Binding eList}"
+                        ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding selectedE}"/>
                 </StackLayout>
-
-                <StackLayout Margin="10" Orientation="Horizontal">
-                    <StackLayout Margin="10">
-                        <Label Text="Expired Warranty"/>
-                        <StackLayout  Orientation="Horizontal">
-                            <Image Source="calender.png" HeightRequest="35"/>
-                            <DatePicker x:Name="eDatePicker"/>
+                <StackLayout Margin="0, 20, 0, 0">
+                    <Label Text=" Asset Description:"/>
+                    <Editor x:Name="AssetDesc" Placeholder="Asset Description"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="calender.png"/>
+                        <DatePicker x:Name="eDatePicker" Date="{Binding eDate}"/>
+                        <StackLayout Orientation="Horizontal" Margin="10, 10, 0, 0">
+                            <Label Text="Asset SN : "/>
+                            <Label Text="dd/gg/nnnn" FontAttributes="Bold" FontSize="18"/>
                         </StackLayout>
                     </StackLayout>
-
-                    <StackLayout Margin="10">
-                        <Label Text="Asset SN :"/>
-                        <Label FontSize="18" Text="dd/gg/nnnn" FontAttributes="Bold"/>
-                    </StackLayout>
                 </StackLayout>
+
+                <Grid RowDefinitions="50" ColumnDefinitions="180, 80, 80">
+                    <Button Grid.Column="1" Text="Submit" BackgroundColor="Transparent" Clicked="Button_Clicked"/>
+                    <Button Grid.Column="2" Text="Cancel" BackgroundColor="Transparent" Clicked="Button_Clicked_1"/>
+                </Grid>
             </StackLayout>
-
-            <Grid RowDefinitions="50" ColumnDefinitions="200, auto">
-                <StackLayout Grid.Column="1" Orientation="Horizontal">
-                    <Button Text="Submit" Clicked="SubButton_Clicked"/>
-                    <Button Text="CANCEL" Clicked="CanButton_Clicked"/>
-                </StackLayout>
-            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

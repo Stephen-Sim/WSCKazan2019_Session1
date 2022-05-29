@@ -17,10 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="views\TransferHistoryPage.xaml.cs">
+      <DependentUpon>TransferHistoryPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="views\RegisterAssetPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="views\TransferLogPage.xaml">
+    <EmbeddedResource Update="views\TransferHistoryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

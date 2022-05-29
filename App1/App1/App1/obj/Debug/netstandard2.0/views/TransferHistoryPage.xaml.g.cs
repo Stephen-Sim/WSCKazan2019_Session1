@@ -8,17 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("App1.views.TransferLog.xaml", "views/TransferLog.xaml", typeof(global::App1.views.TransferLog))]
+[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("App1.views.TransferHistoryPage.xaml", "views/TransferHistoryPage.xaml", typeof(global::App1.views.TransferHistory))]
 
 namespace App1.views {
     
     
-    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("views\\TransferLog.xaml")]
-    public partial class TransferLog : global::Xamarin.Forms.ContentPage {
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("views\\TransferHistoryPage.xaml")]
+    public partial class TransferHistory : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
-            global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(TransferLog));
+            global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(TransferHistory));
         }
     }
 }
